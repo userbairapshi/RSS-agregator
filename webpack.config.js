@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import process from 'process';
 
 export default {
   mode: process.env.NODE_ENV || 'development',
@@ -37,5 +38,9 @@ export default {
   ],
   output: {
     clean: true,
+  },
+  devServer: {
+    open: true,
+    port: 8081,
   },
 };
