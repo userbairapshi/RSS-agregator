@@ -41,6 +41,6 @@ export default {
   },
   devServer: {
     open: true,
-    port: 8081,
+    port: 8082,
   },
 };
