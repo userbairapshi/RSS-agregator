@@ -11,7 +11,7 @@
     "watch": "webpack --watch",
     "serve": "webpack serve"
   },
-  "author": "",
+  "author": "Pshikhacheva Baira",
   "license": "ISC",
   "description": "My webpack project",
   "devDependencies": {
@@ -23,6 +23,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "file-loader": "^6.2.0",
+    "globals": "^15.9.0",
     "html-webpack-plugin": "^5.6.0",
     "postcss-loader": "^8.1.1",
     "sass-loader": "^16.0.0",
