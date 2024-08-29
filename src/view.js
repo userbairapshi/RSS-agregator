@@ -12,15 +12,18 @@ export default (state) => {
         if (error) {
             inputElement.classList.add('is-invalid');
             feedbackElement.textContent = error;
+            feedbackElement.classList.remove('success');
         } else {
             inputElement.classList.remove('is-invalid');
             feedbackElement.textContent = i18next.t('success');
+            feedbackElement.classList.add('success');
         }
     };
 
     const renderFormValid = () => {
         if (state.form.isValid) {
             inputElement.value = '';
+            feedbackElement.textContent = i18next.t('success');
             inputElement.focus();
             formElement.reset();
         }
