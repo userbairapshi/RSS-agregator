@@ -26,7 +26,6 @@ This project has been created using **webpack-cli**, you can now run
 - [`i18next`](https://www.i18next.com/) — для поддержки многократных языков.
 - [`on-change`](https://www.npmjs.com/package/on-change) — для наблюдения за изменениями состояния.
 - [`axios`](https://axios-http.com/) — для работы с HTTP-запросами.
-- [`rss-parser`](https://github.com/rbren/rss-parser) — для парсинга RSS-лент.
 
 ## Визуализация процесса
 
