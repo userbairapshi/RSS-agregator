@@ -18,11 +18,13 @@ export default (state) => {
     if (error) {
       inputElement.classList.add('is-invalid');
       feedbackElement.textContent = error;
-      feedbackElement.classList.remove('success');
+      feedbackElement.classList.remove('text-success');
+      feedbackElement.classList.add('text-danger');
     } else {
       inputElement.classList.remove('is-invalid');
       feedbackElement.textContent = i18next.t('success');
-      feedbackElement.classList.add('success');
+      feedbackElement.classList.remove('text-danger');
+      feedbackElement.classList.add('text-success');
     }
   };
 
@@ -30,6 +32,8 @@ export default (state) => {
     if (state.form.isValid) {
       inputElement.value = '';
       feedbackElement.textContent = i18next.t('success');
+      feedbackElement.classList.remove('text-danger');
+      feedbackElement.classList.add('text-success');
       inputElement.focus();
       formElement.reset();
     }
@@ -82,29 +86,39 @@ export default (state) => {
       postItem.classList.add('item-list');
 
       if (post.isRead) {
-        postLink.classList.add('fw-normal');
+        postLink.classList.add('fw-normal', 'text-muted');
+        postLink.classList.remove('fw-bold');
       } else {
         postLink.classList.add('fw-bold');
+        postLink.classList.remove('text-muted', 'fw-normal');
       }
 
       postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
 
       postLink.setAttribute('href', post.link);
       postLink.setAttribute('target', '_blank');
+      postLink.setAttribute('data-id', post.id);
       postLink.textContent = post.title;
       postButton.textContent = 'Просмотр';
 
-      postButton.addEventListener('click', () => {
+      postLink.addEventListener('click', (e) => {
+        e.preventDefault();
         post.isRead = true;
         renderPosts();
+        window.open(post.link, '_blank');
+      });
+
+      postButton.addEventListener('click', (e) => {
+        e.stopPropagation();
         showModal(post);
+        post.isRead = true;
+        renderPosts();
       });
 
       postItem.append(postLink, postButton);
       postList.appendChild(postItem);
     });
     postsContainer.appendChild(postList);
-    
   };
 
   const showModal = (post) => {
@@ -127,9 +141,6 @@ export default (state) => {
       renderFeeds();
     }
     if (path === 'posts') {
-      renderPosts();
-    }
-    if (path.startsWith('posts') && path.endsWith('.isRead')) {
       renderPosts();
     }
   });

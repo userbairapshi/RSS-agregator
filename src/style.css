@@ -11835,3 +11835,28 @@ textarea.form-control-lg {
     font-weight: bold;
 }
 
+.text-success {
+    color: green;
+}
+  
+.text-danger {
+    color: red;
+}
+
+.text-muted {
+    color: #6c757d;
+  }
+  
+  .fw-normal {
+    font-weight: normal;
+  }
+  
+  .text-muted {
+    color: gray;
+  }
+  
+  .fw-bold {
+    font-weight: bold;
+  }
+  
+  
