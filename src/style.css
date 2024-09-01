@@ -11817,3 +11817,21 @@ textarea.form-control-lg {
         display: none !important
     }
 }
+ .item-list {
+    display: flex;
+    justify-content: space-between; 
+    padding: 8px;
+    gap: 10px;
+}
+
+.border-0 {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    gap: 10px;
+}
+
+.data-id {
+    font-weight: bold;
+}
+
