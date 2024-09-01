@@ -1,5 +1,3 @@
-/* global bootstrap */
-
 import onChange from 'on-change';
 import i18next from 'i18next';
 
@@ -103,16 +101,20 @@ export default (state) => {
 
       postLink.addEventListener('click', (e) => {
         e.preventDefault();
-        post.isRead = true;
-        renderPosts();
-        window.open(post.link, '_blank');
+        state.posts = state.posts.map(p => 
+          p.id === post.id ? { ...p, isRead: true } : p
+        );
+        const link = document.createElement('a');
+        link.href = post.link;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       });
 
       postButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        showModal(post);
-        post.isRead = true;
-        renderPosts();
+        state.modal = { post, isVisible: true };
       });
 
       postItem.append(postLink, postButton);
@@ -121,13 +123,16 @@ export default (state) => {
     postsContainer.appendChild(postList);
   };
 
-  const showModal = (post) => {
-    modalTitle.textContent = post.title;
-    modalBody.textContent = post.description;
-    fullArticleLink.href = post.link;
+  const renderModal = () => {
+    if (state.modal.isVisible) {
+      const post = state.modal.post;
+      modalTitle.textContent = post.title;
+      modalBody.textContent = post.description;
+      fullArticleLink.href = post.link;
 
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   };
 
   return onChange(state, (path, value) => {
@@ -142,6 +147,11 @@ export default (state) => {
     }
     if (path === 'posts') {
       renderPosts();
+    }
+    if (path === 'modal.isVisible') {
+      if (value) {
+        renderModal();
+      }
     }
   });
 };
