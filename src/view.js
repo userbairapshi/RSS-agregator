@@ -15,18 +15,18 @@ export default (state) => {
   const fullArticleLink = modalElement.querySelector('.full-article');
 
   const renderError = (error) => {
-  if (error) {
-    inputElement.classList.add('is-invalid');
-    feedbackElement.textContent = i18next.t(error);
-    feedbackElement.classList.remove('text-success');
-    feedbackElement.classList.add('text-danger');
-  } else {
-    inputElement.classList.remove('is-invalid');
-    feedbackElement.textContent = i18next.t('success');
-    feedbackElement.classList.remove('text-danger');
-    feedbackElement.classList.add('text-success');
-  }
-};
+    if (error) {
+      inputElement.classList.add('is-invalid');
+      feedbackElement.textContent = error;
+      feedbackElement.classList.remove('text-success');
+      feedbackElement.classList.add('text-danger');
+    } else {
+      inputElement.classList.remove('is-invalid');
+      feedbackElement.textContent = i18next.t('success');
+      feedbackElement.classList.remove('text-danger');
+      feedbackElement.classList.add('text-success');
+    }
+  };
 
   const renderFormValid = () => {
     if (state.form.isValid) {
