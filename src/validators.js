@@ -8,9 +8,9 @@ yup.setLocale({
     string: {
       url: () => ({ key: 'validation.url' }),
     },
-  });
+});
 
-  const schema = (urls) => yup.string()
+const schema = (urls) => yup.string()
     .url()
     .notOneOf(urls)
     .required();
