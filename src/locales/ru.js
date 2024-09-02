@@ -2,7 +2,7 @@ export default {
     validation: {
         required: 'Это обязательное поле',
         url: 'Ссылка должна быть валидным URL',
-        notOneOf: 'Ссылка уже добавлена',
+        notOneOf: 'RSS уже существует',
     },
     success: 'RSS успешно загружен',
 };
