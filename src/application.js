@@ -43,9 +43,7 @@ const app = () => {
           watchedState.form.error = null;
         })
         .catch((error) => {
-          const translatedErrors = error.errors
-            ? error.errors.map((err) => i18next.t(err.key))
-            : [i18next.t('validation.url')];  // Убедитесь, что используется корректный перевод
+          const translatedErrors = error.errors ? error.errors.map((err) => i18next.t(err.key)) : [i18next.t('validation.url')];
           watchedState.form.isValid = false;
           watchedState.form.error = translatedErrors[0];
         });
