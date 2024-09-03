@@ -36,6 +36,10 @@ export default (state) => {
       feedbackElement.classList.add('text-success');
       inputElement.focus();
       formElement.reset();
+    } else {
+      inputElement.classList.add('is-invalid');
+      feedbackElement.classList.remove('text-success');
+      feedbackElement.classList.add('text-danger');
     }
   };
 
