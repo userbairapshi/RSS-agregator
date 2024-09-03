@@ -5,5 +5,5 @@ export default {
       notOneOf: 'RSS уже существует',
     },
     success: 'RSS успешно загружен',
-    invalidRSS: 'Ресурс не содержит валидный RSS',
+    invalidRss: 'Ресурс не содержит валидный RSS',
   };

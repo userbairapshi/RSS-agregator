@@ -43,9 +43,18 @@ const app = () => {
           watchedState.form.error = null;
         })
         .catch((error) => {
-          const translatedErrors = error.errors ? error.errors.map((err) => i18next.t(err.key)) : [i18next.t('validation.url')];
+          console.error('Error processing RSS:', error);
+          
+          if (error.message === 'Invalid RSS content') {
+            watchedState.form.error = i18next.t('invalidRss');
+          } else if (error.errors) {
+            const translatedErrors = error.errors.map((err) => i18next.t(err.key));
+            watchedState.form.error = translatedErrors[0];
+          } else {
+            watchedState.form.error = i18next.t('validation.url');
+          }
+
           watchedState.form.isValid = false;
-          watchedState.form.error = translatedErrors[0];
         });
     });
 
