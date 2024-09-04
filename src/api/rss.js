@@ -2,10 +2,6 @@ import axios from "axios";
 import domParsingData from "./parse.js";
 
 const rssFeeds = (url) => {
-  if (url === 'https://news.yandex.ru/daily.rss') {
-    return Promise.reject(new Error('Ошибка сети: Не удалось загрузить RSS-ленту.'));
-  }
-
   return axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`)
     .then(response => {
       if (response.status === 200) {
@@ -21,9 +17,8 @@ const rssFeeds = (url) => {
     })
     .catch(error => {
       console.error('Ошибка при загрузке RSS-ленты:', error.message);
-      return Promise.reject(error);
+      return Promise.reject(new Error('Ресурс не содержит валидный RSS'));
     });
 };
 
 export default rssFeeds;
-
