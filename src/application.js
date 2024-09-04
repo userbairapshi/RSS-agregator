@@ -3,7 +3,7 @@ import schema from './validators.js';
 import initView from './view.js';
 import rssFeeds from './api/rss.js';
 import checkUpdates from './api/timeRss.js';
-import ru from './locales/ru.js'
+import ru from './locales/ru.js';
 
 const app = () => {
   i18next.init({
@@ -45,7 +45,7 @@ const app = () => {
         .catch((error) => {
           console.error('Error processing RSS:', error);
           
-          if (error.message.includes('Ошибка сети')) {
+          if (error.message === 'Ошибка сети') {
             watchedState.form.error = i18next.t('networkError');
           } else if (error.message === 'Ресурс не содержит валидный RSS') {
             watchedState.form.error = i18next.t('invalidRss');
