@@ -45,7 +45,7 @@ const app = () => {
         .catch((error) => {
           console.error('Error processing RSS:', error);
           
-          if (error.message === 'Invalid RSS content') {
+          if (error.message === 'Ресурс не содержит валидный RSS') {
             watchedState.form.error = i18next.t('invalidRss');
           } else if (error.errors) {
             const translatedErrors = error.errors.map((err) => i18next.t(err.key));
