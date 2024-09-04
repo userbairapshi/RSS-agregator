@@ -17,7 +17,12 @@ const rssFeeds = (url) => {
     })
     .catch(error => {
       console.error('Ошибка при загрузке RSS-ленты:', error.message);
-      return Promise.reject(new Error('Ресурс не содержит валидный RSS'));
+
+      if (error.response && error.response.status === 404) {
+        throw new Error('Ошибка сети');
+      } else {
+        throw new Error('Ошибка сети');
+      }
     });
 };
 

@@ -6,4 +6,5 @@ export default {
     },
     success: 'RSS успешно загружен',
     invalidRss: 'Ресурс не содержит валидный RSS',
+    networkError: 'Ошибка сети',
   };

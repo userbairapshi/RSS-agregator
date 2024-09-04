@@ -1,9 +1,9 @@
+import i18next from 'i18next';
 import schema from './validators.js';
 import initView from './view.js';
-import i18next from 'i18next';
-import ru from './locales/ru.js';
 import rssFeeds from './api/rss.js';
 import checkUpdates from './api/timeRss.js';
+import ru from './locales/ru.js'
 
 const app = () => {
   i18next.init({
@@ -22,7 +22,7 @@ const app = () => {
       feeds: [],
       posts: [],
     };
-    
+
     const watchedState = initView(state);
     const element = document.querySelector('form');
 
@@ -45,7 +45,9 @@ const app = () => {
         .catch((error) => {
           console.error('Error processing RSS:', error);
           
-          if (error.message === 'Ресурс не содержит валидный RSS') {
+          if (error.message.includes('Ошибка сети')) {
+            watchedState.form.error = i18next.t('networkError');
+          } else if (error.message === 'Ресурс не содержит валидный RSS') {
             watchedState.form.error = i18next.t('invalidRss');
           } else if (error.errors) {
             const translatedErrors = error.errors.map((err) => i18next.t(err.key));
