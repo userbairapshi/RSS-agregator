@@ -38,7 +38,7 @@ const app = () => {
           const { title, description, posts } = feedData;
           const newFeed = { title, description, url };
           watchedState.feeds.push(newFeed);
-          watchedState.posts.push(...posts.map(post => ({ ...post, isRead: false })));
+          watchedState.posts.push(...posts.map((post) => ({ ...post, isRead: false })));
           watchedState.form.isValid = true;
           watchedState.form.error = null;
         })
@@ -63,7 +63,7 @@ const app = () => {
     document.addEventListener('click', (event) => {
       if (event.target.matches('.posts a')) {
         const postId = event.target.getAttribute('data-id');
-        const post = state.posts.find(p => p.id === postId);
+        const post = state.posts.find((p) => p.id === postId);
         if (post && !post.isRead) {
           post.isRead = true;
           watchedState.posts = [...state.posts];
