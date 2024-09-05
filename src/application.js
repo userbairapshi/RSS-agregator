@@ -44,18 +44,15 @@ const app = () => {
         })
         .catch((error) => {
           console.error('Error processing RSS:', error);
-          
-          if (error.message === 'Ошибка сети') {
-            watchedState.form.error = i18next.t('networkError');
-          } else if (error.message === 'Ресурс не содержит валидный RSS') {
+
+          if (error.message === 'Ресурс не содержит валидный RSS') {
             watchedState.form.error = i18next.t('invalidRss');
-          } else if (error.errors) {
-            const translatedErrors = error.errors.map((err) => i18next.t(err.key));
-            watchedState.form.error = translatedErrors[0];
+          } else if (error.message === 'Ошибка сети') {
+            watchedState.form.error = i18next.t('networkError');
           } else {
             watchedState.form.error = i18next.t('validation.url');
           }
-
+    
           watchedState.form.isValid = false;
         });
     });
