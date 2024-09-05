@@ -14,6 +14,15 @@ export default (state) => {
   const modalBody = modalElement.querySelector('.modal-body');
   const fullArticleLink = modalElement.querySelector('.full-article');
 
+  const showModal = (post) => {
+    modalTitle.textContent = post.title;
+    modalBody.textContent = post.description;
+    fullArticleLink.href = post.link;
+
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  };
+
   const renderError = (error) => {
     if (error) {
       inputElement.classList.add('is-invalid');
@@ -89,13 +98,8 @@ export default (state) => {
 
       postItem.classList.add('item-list');
 
-      if (post.isRead) {
-        postLink.classList.add('fw-normal', 'text-muted');
-        postLink.classList.remove('fw-bold');
-      } else {
-        postLink.classList.add('fw-bold');
-        postLink.classList.remove('text-muted', 'fw-normal');
-      }
+      const postLinkClass = post.isRead ? ['fw-normal', 'text-muted'] : ['fw-bold'];
+      postLink.classList.add(...postLinkClass);
 
       postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
 
@@ -107,10 +111,10 @@ export default (state) => {
 
       postLink.addEventListener('click', (e) => {
         e.preventDefault();
-        post.isRead = true;
+        const updatedPost = { ...post, isRead: true };
         renderPosts();
         const link = document.createElement('a');
-        link.href = post.link;
+        link.href = updatedPost.link;
         link.target = '_blank';
         document.body.appendChild(link);
         link.click();
@@ -119,8 +123,8 @@ export default (state) => {
 
       postButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        showModal(post);
-        post.isRead = true;
+        const updatedPost = { ...post, isRead: true };
+        showModal(updatedPost);
         renderPosts();
       });
 
@@ -128,15 +132,6 @@ export default (state) => {
       postList.appendChild(postItem);
     });
     postsContainer.appendChild(postList);
-  };
-
-  const showModal = (post) => {
-    modalTitle.textContent = post.title;
-    modalBody.textContent = post.description;
-    fullArticleLink.href = post.link;
-
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
   };
 
   return onChange(state, (path, value) => {
