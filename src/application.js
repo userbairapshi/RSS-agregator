@@ -49,10 +49,13 @@ const app = () => {
             watchedState.form.error = i18next.t('invalidRss');
           } else if (error.message === 'Ошибка сети') {
             watchedState.form.error = i18next.t('networkError');
+          } else if (error.errors) {
+            const translatedErrors = error.errors.map((err) => i18next.t(err.key));
+            watchedState.form.error = translatedErrors[0];
           } else {
             watchedState.form.error = i18next.t('validation.url');
           }
-    
+
           watchedState.form.isValid = false;
         });
     });
