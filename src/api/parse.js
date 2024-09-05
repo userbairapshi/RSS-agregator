@@ -13,7 +13,7 @@ const domParsingData = (data) => {
     const posts = Array.from(xml.querySelectorAll('item')).map(item => ({
         title: item.querySelector('title')?.textContent || 'No title',
         link: item.querySelector('link')?.textContent || '#',
-        description: item.querySelector('description')?.textContent || 'No description'
+        description: item.querySelector('description')?.textContent || 'No description',
     }));
 
     return { title, description, posts };

@@ -31,7 +31,7 @@ const app = () => {
       const formData = new FormData(e.target);
       const url = formData.get('url').trim();
       const rssSchema = schema(state.feeds.map((feed) => feed.url));
-      
+
       rssSchema.validate(url, { abortEarly: false })
         .then((validatedUrl) => rssFeeds(validatedUrl))
         .then((feedData) => {
