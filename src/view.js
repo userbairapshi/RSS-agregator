@@ -119,7 +119,7 @@ export default (state) => {
       });
 
       postButton.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.preventDefault();
         showModal(post);
       });
 

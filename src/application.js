@@ -37,8 +37,19 @@ const app = () => {
         .then((feedData) => {
           const { title, description, posts } = feedData;
           const newFeed = { title, description, url };
+
+          let postIdCounter = state.posts.length;
+          const newPosts = posts.map((post) => {
+            const id = {
+              ...post,
+              id: (postIdCounter += 1).toString(),
+              isRead: false,
+            };
+            return id;
+          });
+
           watchedState.feeds = [...state.feeds, newFeed];
-          watchedState.posts = [...state.posts, ...posts.map((post) => ({ ...post, isRead: false }))];
+          watchedState.posts = [...state.posts, ...newPosts];
           watchedState.form.isValid = true;
           watchedState.form.error = null;
         })
@@ -69,9 +80,12 @@ const app = () => {
         if (postId) {
           const post = state.posts.find((p) => p.id === postId);
           if (post && !post.isRead) {
-            watchedState.posts = state.posts.map((p) =>
-              p.id === postId ? { ...p, isRead: true } : p
-            );
+            watchedState.posts = state.posts.map((p) => {
+              if (p.id === postId) {
+                return { ...p, isRead: true };
+              }
+              return p;
+            });
           }
         }
       }
@@ -81,7 +95,12 @@ const app = () => {
         if (postId) {
           const post = state.posts.find((p) => p.id === postId);
           if (post) {
-            showModal(post);
+            watchedState.posts = state.posts.map((p) => {
+              if (p.id === postId) {
+                return { ...p, isRead: true };
+              }
+              return p;
+            });
           }
         }
       }
@@ -94,4 +113,3 @@ const app = () => {
 };
 
 export default app;
-
