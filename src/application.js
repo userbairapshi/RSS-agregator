@@ -62,7 +62,8 @@ const app = () => {
             watchedState.form.error = i18next.t('networkError');
           } else if (error.errors) {
             const translatedErrors = error.errors.map((err) => i18next.t(err.key));
-            watchedState.form.error = translatedErrors[0];
+            const [firstError] = translatedErrors;
+            watchedState.form.error = firstError;
           } else {
             watchedState.form.error = i18next.t('validation.url');
           }
@@ -73,7 +74,7 @@ const app = () => {
 
     const postsContainer = document.querySelector('.posts');
     postsContainer.addEventListener('click', (e) => {
-      const target = e.target;
+      const { target } = e;
 
       if (target.tagName === 'A') {
         const postId = target.getAttribute('data-id');
