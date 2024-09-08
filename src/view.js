@@ -89,15 +89,14 @@ export default (state) => {
 
     postDivTitle.classList.add('card-body', 'fw-bold');
     postTitle.classList.add('card-title', 'h4');
-
     postTitle.textContent = 'Посты';
+
     state.posts.forEach((post) => {
       const postItem = document.createElement('li');
       const postLink = document.createElement('a');
       const postButton = document.createElement('button');
 
       postItem.classList.add('item-list');
-
       const postLinkClass = post.isRead ? ['fw-normal', 'text-muted'] : ['fw-bold'];
       postLink.classList.add(...postLinkClass);
 
@@ -111,10 +110,8 @@ export default (state) => {
 
       postLink.addEventListener('click', (e) => {
         e.preventDefault();
-        const updatedPost = { ...post, isRead: true };
-        renderPosts();
         const link = document.createElement('a');
-        link.href = updatedPost.link;
+        link.href = post.link;
         link.target = '_blank';
         document.body.appendChild(link);
         link.click();
@@ -123,9 +120,7 @@ export default (state) => {
 
       postButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        const updatedPost = { ...post, isRead: true };
-        showModal(updatedPost);
-        renderPosts();
+        showModal(post);
       });
 
       postItem.append(postLink, postButton);

@@ -11817,7 +11817,7 @@ textarea.form-control-lg {
         display: none !important
     }
 }
- .item-list {
+.item-list {
     display: flex;
     justify-content: space-between; 
     padding: 8px;
@@ -11844,19 +11844,13 @@ textarea.form-control-lg {
 }
 
 .text-muted {
-    color: #6c757d;
-  }
-  
-  .fw-normal {
-    font-weight: normal;
-  }
-  
-  .text-muted {
     color: gray;
-  }
+}
   
-  .fw-bold {
+.fw-normal {
+    font-weight: normal;
+}
+  
+.fw-bold {
     font-weight: bold;
-  }
-  
-  
+}

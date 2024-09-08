@@ -24,9 +24,9 @@ const app = () => {
     };
 
     const watchedState = initView(state);
-    const element = document.querySelector('form');
 
-    element.addEventListener('submit', (e) => {
+    const formElement = document.querySelector('form');
+    formElement.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
       const url = formData.get('url').trim();
@@ -37,8 +37,8 @@ const app = () => {
         .then((feedData) => {
           const { title, description, posts } = feedData;
           const newFeed = { title, description, url };
-          watchedState.feeds.push(newFeed);
-          watchedState.posts.push(...posts.map((post) => ({ ...post, isRead: false })));
+          watchedState.feeds = [...state.feeds, newFeed];
+          watchedState.posts = [...state.posts, ...posts.map((post) => ({ ...post, isRead: false }))];
           watchedState.form.isValid = true;
           watchedState.form.error = null;
         })
@@ -60,13 +60,29 @@ const app = () => {
         });
     });
 
-    document.addEventListener('click', (event) => {
-      if (event.target.matches('.posts a')) {
-        const postId = event.target.getAttribute('data-id');
-        const post = state.posts.find((p) => p.id === postId);
-        if (post && !post.isRead) {
-          post.isRead = true;
-          watchedState.posts = [...state.posts];
+    const postsContainer = document.querySelector('.posts');
+    postsContainer.addEventListener('click', (e) => {
+      const target = e.target;
+
+      if (target.tagName === 'A') {
+        const postId = target.getAttribute('data-id');
+        if (postId) {
+          const post = state.posts.find((p) => p.id === postId);
+          if (post && !post.isRead) {
+            watchedState.posts = state.posts.map((p) =>
+              p.id === postId ? { ...p, isRead: true } : p
+            );
+          }
+        }
+      }
+
+      if (target.tagName === 'BUTTON') {
+        const postId = target.previousElementSibling.getAttribute('data-id');
+        if (postId) {
+          const post = state.posts.find((p) => p.id === postId);
+          if (post) {
+            showModal(post);
+          }
         }
       }
     });
@@ -78,3 +94,4 @@ const app = () => {
 };
 
 export default app;
+
