@@ -7,7 +7,7 @@ module.exports = {
     'airbnb-base',
   ],
   parserOptions: {
-    ecmaVersion: 2021,
+    ecmaVersion: 12,
     sourceType: 'module',
   },
   rules: {
@@ -21,5 +21,17 @@ module.exports = {
     ],
     'no-console': 'off',
     'prefer-destructuring': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          '**/*.test.js',
+          '**/*.spec.js',
+          '**/playwright.config.js',
+          '**/webpack.config.js',
+          '**/webpack.*.js', 
+        ],
+      },
+    ],
   },
 };

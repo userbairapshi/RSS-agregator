@@ -1,4 +1,5 @@
-/* global bootstrap */
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal } from 'bootstrap';
 
 import onChange from 'on-change';
 import i18next from 'i18next';
@@ -19,7 +20,7 @@ export default (state) => {
     modalBody.textContent = post.description;
     fullArticleLink.href = post.link;
 
-    const modal = new bootstrap.Modal(modalElement);
+    const modal = new Modal(modalElement);
     modal.show();
   };
 
@@ -61,14 +62,14 @@ export default (state) => {
     feedDivTitle.classList.add('card-body', 'card', 'border-0');
     feedDivTitleH2.classList.add('card-title', 'h4');
 
-    feedDivTitleH2.textContent = 'Фиды';
+    feedDivTitleH2.textContent = i18next.t('feeds');
     feedDivTitle.appendChild(feedDivTitleH2);
     state.feeds.forEach((feed) => {
       const feedItem = document.createElement('li');
       const feedTitle = document.createElement('h3');
       const feedDescription = document.createElement('p');
 
-      feedTitle.classList.add('h6', 'm-0', 'fw-bold');
+      feedTitle.classList.add('h6', 'fw-bold');
 
       feedTitle.textContent = feed.title;
       feedDescription.textContent = feed.description;
@@ -89,7 +90,7 @@ export default (state) => {
 
     postDivTitle.classList.add('card-body', 'fw-bold');
     postTitle.classList.add('card-title', 'h4');
-    postTitle.textContent = 'Посты';
+    postTitle.textContent = i18next.t('posts');
 
     state.posts.forEach((post) => {
       const postItem = document.createElement('li');
@@ -106,7 +107,7 @@ export default (state) => {
       postLink.setAttribute('target', '_blank');
       postLink.setAttribute('data-id', post.id);
       postLink.textContent = post.title;
-      postButton.textContent = 'Просмотр';
+      postButton.textContent = i18next.t('viewing');
 
       postLink.addEventListener('click', (e) => {
         e.preventDefault();

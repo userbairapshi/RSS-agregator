@@ -6,20 +6,17 @@ const rssFeeds = (url) => axios.get(`https://allorigins.hexlet.app/get?url=${enc
     if (response.status === 200) {
       const feedData = domParsingData(response.data.contents);
       if (!feedData || !feedData.posts) {
-        throw new Error('Ресурс не содержит валидный RSS');
+        throw new Error('invalidRss');
       }
       return feedData;
     }
-    throw new Error('Ресурс не содержит валидный RSS');
+    throw new Error('invalidRss');
   })
   .catch((error) => {
-    if (error.request) {
-      console.error('Ошибка сети: не удалось загрузить ресурс');
-      throw new Error('Ошибка сети');
-    } else {
-      console.error('Ошибка:', error.message);
+    if (error.isAxiosError) {
+      throw new Error('networkError');
     }
-    throw new Error('Ресурс не содержит валидный RSS');
+    throw error;
   });
 
 export default rssFeeds;

@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import _ from 'lodash';
 import schema from './validators.js';
 import initView from './view.js';
 import rssFeeds from './api/rss.js';
@@ -26,48 +27,40 @@ const app = () => {
     const watchedState = initView(state);
 
     const formElement = document.querySelector('form');
+
     formElement.addEventListener('submit', (e) => {
       e.preventDefault();
+
       const formData = new FormData(e.target);
       const url = formData.get('url').trim();
+
       const rssSchema = schema(state.feeds.map((feed) => feed.url));
 
       rssSchema.validate(url, { abortEarly: false })
         .then((validatedUrl) => rssFeeds(validatedUrl))
-        .then((feedData) => {
-          const { title, description, posts } = feedData;
+        .then(({ title, description, posts }) => {
           const newFeed = { title, description, url };
 
-          let postIdCounter = state.posts.length;
-          const newPosts = posts.map((post) => {
-            const id = {
-              ...post,
-              id: (postIdCounter += 1).toString(),
-              isRead: false,
-            };
-            return id;
-          });
+          const postsWithIds = posts.map((post) => ({
+            ...post,
+            id: _.uniqueId(),
+            isRead: false,
+          }));
 
           watchedState.feeds = [...state.feeds, newFeed];
-          watchedState.posts = [...state.posts, ...newPosts];
+          watchedState.posts = [...state.posts, ...postsWithIds];
           watchedState.form.isValid = true;
           watchedState.form.error = null;
         })
         .catch((error) => {
           console.error('Error processing RSS:', error);
-
-          if (error.message === 'Ресурс не содержит валидный RSS') {
+          if (error.message === 'invalidRss') {
             watchedState.form.error = i18next.t('invalidRss');
-          } else if (error.message === 'Ошибка сети') {
+          } else if (error.message === 'networkError') {
             watchedState.form.error = i18next.t('networkError');
-          } else if (error.errors) {
-            const translatedErrors = error.errors.map((err) => i18next.t(err.key));
-            const [firstError] = translatedErrors;
-            watchedState.form.error = firstError;
           } else {
             watchedState.form.error = i18next.t('validation.url');
           }
-
           watchedState.form.isValid = false;
         });
     });
@@ -75,34 +68,17 @@ const app = () => {
     const postsContainer = document.querySelector('.posts');
     postsContainer.addEventListener('click', (e) => {
       const { target } = e;
+      const postId = target.getAttribute('data-id') || target.previousElementSibling?.getAttribute('data-id');
 
-      if (target.tagName === 'A') {
-        const postId = target.getAttribute('data-id');
-        if (postId) {
-          const post = state.posts.find((p) => p.id === postId);
-          if (post && !post.isRead) {
-            watchedState.posts = state.posts.map((p) => {
-              if (p.id === postId) {
-                return { ...p, isRead: true };
-              }
-              return p;
-            });
-          }
-        }
-      }
-
-      if (target.tagName === 'BUTTON') {
-        const postId = target.previousElementSibling.getAttribute('data-id');
-        if (postId) {
-          const post = state.posts.find((p) => p.id === postId);
-          if (post) {
-            watchedState.posts = state.posts.map((p) => {
-              if (p.id === postId) {
-                return { ...p, isRead: true };
-              }
-              return p;
-            });
-          }
+      if (postId) {
+        const post = state.posts.find((p) => p.id === postId);
+        if (post && !post.isRead) {
+          watchedState.posts = state.posts.map((p) => {
+            if (p.id === postId) {
+              return { ...p, isRead: true };
+            }
+            return p;
+          });
         }
       }
     });

@@ -3,6 +3,8 @@ import rssFeeds from './rss.js';
 const checkUpdates = (state, watchedState) => {
   const feedUrls = state.feeds.map((feed) => feed.url);
 
+  const requestInterval = 5000;
+
   const fetchUpdates = (url) => rssFeeds(url)
     .then((feedData) => {
       const { posts } = feedData;
@@ -18,15 +20,11 @@ const checkUpdates = (state, watchedState) => {
     });
 
   Promise.all(feedUrls.map(fetchUpdates))
-    .then(() => {
-      console.log('Обновление завершено.');
-    })
     .catch((error) => {
       console.error('Ошибка обновления всех постов:', error.message);
     })
     .finally(() => {
-      console.log('Запуск следующего цикла обновления через 5 секунд.');
-      setTimeout(() => checkUpdates(state, watchedState), 5000);
+      setTimeout(() => checkUpdates(state, watchedState), requestInterval);
     });
 };
 

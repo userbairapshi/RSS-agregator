@@ -4,7 +4,7 @@ const domParsingData = (data) => {
 
   const parseError = xml.querySelector('parsererror');
   if (parseError) {
-    throw new Error('Error parsing XML');
+    throw new Error('invalidRss');
   }
 
   const title = xml.querySelector('channel > title')?.textContent || 'No title';
