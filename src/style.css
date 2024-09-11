@@ -1,38 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-.data-id {
-    font-weight: bold;
-}
-
-.text-success {
-    color: green;
-}
-  
-.text-danger {
-    color: red;
-}
-
-.text-muted {
-    color: gray;
-}
-  
-.fw-normal {
-    font-weight: normal;
-}
-  
-.fw-bold {
-    font-weight: bold;
-}
 .item-list {
     display: flex;
     justify-content: space-between; 
-    padding: 8px;
-    gap: 10px;
-}
-
-.border-0 {
-    display: flex;
-    justify-content: space-between;
     padding: 8px;
     gap: 10px;
 }

@@ -1,4 +1,4 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 Добро пожаловать в ваш новый потрясающий проект!
 
 [![hexlet-check](https://github.com/userbairapshi/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/userbairapshi/frontend-project-11/actions/workflows/hexlet-check.yml)
 
