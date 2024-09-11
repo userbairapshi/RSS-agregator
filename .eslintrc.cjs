@@ -29,7 +29,7 @@ module.exports = {
           '**/*.spec.js',
           '**/playwright.config.js',
           '**/webpack.config.js',
-          '**/webpack.*.js', 
+          '**/webpack.*.js',
         ],
       },
     ],
