@@ -59,7 +59,7 @@ const app = () => {
           } else if (error.message === 'networkError') {
             watchedState.form.error = i18next.t('networkError');
           } else {
-            watchedState.form.error = i18next.t('validation.url');
+            watchedState.form.error = i18next.t('success');
           }
           watchedState.form.isValid = false;
         });
